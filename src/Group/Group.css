@@ -1,0 +1,66 @@
+.add-group {
+  width: 100%;
+  text-align: center;
+  color: #2F95F5;
+}
+
+.add-team {
+  color: #2F95F5;
+
+}
+
+.team {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+
+.victory {
+  font-size: 14px;
+  line-height: 32px;
+}
+
+.part {
+  padding: 0 10px;
+}
+
+.person {
+  /*display: inline-block;*/
+  display: flex;
+}
+
+.person select {
+  display: block;
+  margin-bottom: 6px;
+  /*height: 20px;*/
+  /*line-height: 20px;*/
+}
+
+.game-state {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #2F95F5;
+  border-radius: 50%;
+  position: relative;
+  display: block;
+}
+
+.win-state::after {
+  content: "";
+  display: block;
+  width: 14px;
+  height: 14px;
+  background-color: #2F95F5;
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+}
+
+.delete-team {
+  color: red;
+  line-height: 80px;
+  width: 24px;
+  text-align: center;
+  margin-left: 10px;
+}
