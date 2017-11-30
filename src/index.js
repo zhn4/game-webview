@@ -9,6 +9,8 @@ import Dashboard from './Dashboard/Dashboard';
 import Add from './Add/Add';
 import GameInfo from './GameInfo/GameInfo';
 import Group from './Group/Group';
+import Score from './Score/Score';
+import Show from './Show/Show';
 import registerServiceWorker from './registerServiceWorker';
 
 // ReactDOM.render(<App />, document.getElementById('root'));
@@ -25,6 +27,10 @@ ReactDOM.render(
       <Route exact path='/gameinfo/:id' component={GameInfo}/>
       {/* 比赛分组 */}
       <Route exact path='/group/:id' component={Group}/>
+      {/* 显示比分 */}
+      <Route exact path='/score/:id' component={Score}/>
+      {/* 显示信息 */}
+      <Route exact path='/show/:id' component={Show}/>
     </div>
   </Router>,
   document.getElementById('root')

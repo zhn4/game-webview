@@ -12,7 +12,11 @@
 .team {
   display: flex;
   justify-content: center;
-  padding-bottom: 20px;
+  padding-bottom: 25px;
+}
+
+.team:last-of-type {
+  /*padding: 0;*/
 }
 
 .victory {
@@ -63,4 +67,18 @@
   width: 24px;
   text-align: center;
   margin-left: 10px;
+}
+
+.delete-group, .delete-round {
+  display: inline-block;
+  color: red;
+  margin-left: 20px;
+}
+
+.group {
+  /*margin-bottom: 20px;*/
+}
+
+.group > div:first-of-type {
+  margin-bottom: 14px;
 }

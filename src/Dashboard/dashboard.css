@@ -53,12 +53,25 @@ a {
   margin-bottom: 30px;
 }
 
-.delete-btn {
-  background-color: red;
+.delete-btns {
+  /*background-color: red;*/
+  color: red;
+  text-align: center;
+  padding: 6px 0;
+  /*margin: 6px 0;*/
+  margin-top: 10px;
 }
 
-.new-btn {
-  background-color: green;
+.new-btns {
+  /*background-color: green;*/
+  color: green;
+  text-align: center;
+  padding: 6px 0;
+  margin-top: 10px;
+}
+
+.delete-btn {
+  background-color: red;
 }
 
 select {

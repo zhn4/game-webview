@@ -1,0 +1,71 @@
+.show {
+  background-color: #f0f0f0;
+}
+
+.show .box {
+  /*position: absolute;
+  left: 16px;
+  top: 0;*/
+  height: 48px;
+  line-height: 48px;
+  /* padding-left: 16px; */
+  font-size: 12px;
+  border-bottom: 1px solid #d8d8d8;
+  margin-left: 16px;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 16px;
+}
+
+.show .title-box {
+  border-bottom: 1px solid #d8d8d8;
+  margin-left: 16px;
+  padding-right: 16px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.show .title-box div:first-of-type, .show .title-box div:last-of-type {
+  font-size: 10px;
+  color: #666;
+  /*padding-bottom: 2px;*/
+}
+
+.show .title-box div:last-of-type {
+  /*padding-bottom: 6px;*/
+}
+
+.show .title-box div:nth-of-type(2) {
+  font-size: 12px;
+  padding: 4px 0;
+}
+
+.show .ps-box {
+  border-bottom: 1px solid #d8d8d8;
+  font-size: 12px;
+  margin-left: 16px;
+  padding-right: 16px;
+}
+
+.show .ps-box div:first-of-type {
+  padding: 6px 0;
+}
+
+.show .ps-box div:last-of-type {
+  border: 1px solid #d8d8d8;
+  padding: 6px;
+  margin-bottom: 12px;
+}
+
+.show-part {
+  margin-bottom: 12px;
+  background-color: #fff;
+}
+
+.show-part:last-of-type {
+  margin: 0;
+}
+
+.show-part > div:last-of-type {
+  border-bottom: 1px solid transparent;
+}

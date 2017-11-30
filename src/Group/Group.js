@@ -180,6 +180,27 @@ export default class Group extends Component {
       round: round
     })
   }
+  deleteGroup(i, e) {
+    console.log('删除组')
+    let round = this.state.round
+    let current_round = round[e.target.dataset.round_index]
+    // console.log(round)
+    // console.log(current_round)
+    current_round.splice(e.target.dataset.group_index, 1)
+    this.setState({
+      round: round
+    })
+  }
+  deleteRound(i, e) {
+    console.log('删除轮')
+    let round = this.state.round
+    // console.log(round)
+    round.splice(e.target.dataset.round_index, 1)
+    // console.log(round)
+    this.setState({
+      round: round
+    })
+  }
   submit() {
     console.log(this.state.round)
     // 发送分组ajax
@@ -191,11 +212,17 @@ export default class Group extends Component {
         {
           this.state.round.map((round, round_index) => (
             <div key={round_index} className="">
-              <h2 key={round_index}>{round_index + 1}轮</h2>
+              <h2 key={round_index}>
+                {round_index + 1}轮
+                <div className="delete-round" data-round_index={round_index} onClick={this.deleteRound.bind(this, round_index)}>X</div>
+              </h2>
               {
                 this.state.round[round_index].map((group, group_index) => (
                   <div className="group" key={group_index}>
-                    <p>第{group_index + 1}组</p>
+                    <div>
+                      第{group_index + 1}组
+                      <div className="delete-group" data-round_index={round_index} data-group_index={group_index} onClick={this.deleteGroup.bind(this, group_index)}>X</div>
+                    </div>
                     {
                       group.map((team, team_index) => (
                         <div key={team_index}>

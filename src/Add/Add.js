@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import GameInfo from '../GameInfo/GameInfo'
 
@@ -11,6 +11,7 @@ export default class Add extends Component {
     super(props)
     this.state = {
       // game: false
+      id: '',
       titleThree: '',
       titleOne: '',
       titleTwo: '',
@@ -32,6 +33,7 @@ export default class Add extends Component {
       console.log('you id')
       this.setState({
         // game: false
+        id: 1,
         titleThree: '激烈的',
         titleOne: '兴盛路冬季飞镖比赛2',
         titleTwo: '飞镖比赛',
@@ -232,8 +234,9 @@ export default class Add extends Component {
                     </div>
                   ))
                 }
-                <div onClick={this.addPeople.bind(this)} className="btn new-btn">+添加</div>
-                <div onClick={this.deletePeople.bind(this)} className="btn delete-btn">-删除</div>
+                <div onClick={this.addPeople.bind(this)} className="new-btns">+添加人员</div>
+                <div onClick={this.deletePeople.bind(this)} className="delete-btns">-删除人员</div>
+                <Link to={'/group/' + this.props.match.params.id} className="edit-group-btn">编辑比赛分组</Link>
                 <div onClick={this.finish.bind(this)} className="btn add-btn">提交</div>
               </div>
             :
