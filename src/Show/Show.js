@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
-
+import axios from 'axios';
 
 import './Show.css'
 
 let show = {
   id: 1,
+  sordId: 10086,
   titleThree: '激烈的',
   titleOne: '兴盛路冬季飞镖比赛2',
   titleTwo: '飞镖比赛',
@@ -31,9 +31,20 @@ export default class Show extends Component {
   }
   componentWillMount() {
     console.log('发送ajax')
-    this.setState({
-      show: show
-    })
+    // this.setState({
+    //   show: show
+    // })
+    let that = this
+    axios.get('https://www.dartsunion.com:7474/dartsworld/match/edit?id=' + this.props.match.params.id)
+      .then(function (response) {
+        console.log(response)
+        that.setState({
+          show: response.data
+        })
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
   render() {
     return (

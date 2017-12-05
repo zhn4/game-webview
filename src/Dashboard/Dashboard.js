@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
+// import 'whatwg-fetch';
+import axios from 'axios';
 
 import './dashboard.css'
 
@@ -46,9 +47,18 @@ export default class Dashboard extends Component {
   }
   componentWillMount() {
     console.log('发送ajax')
-    this.setState({
-      game: game
-    })
+    let that = this
+    axios.get('https://www.dartsunion.com:7474/dartsworld/match/dashboard?storeId=1000003')
+      .then(function (response) {
+        // console.log(response)
+        // console.log(response.data)
+        that.setState({
+          game: response.data
+        })
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
   render() {
     return (
@@ -78,7 +88,6 @@ export default class Dashboard extends Component {
               <div className="no-game">暂无赛事</div>
             :
             ''
-
         }
         <Link to="/add" className="link-btn">发布赛事</Link>
       </div>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
+import axios from 'axios';
+
 
 import './Score.css'
 
@@ -68,14 +69,22 @@ export default class Score extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      round: round
+      round: []
     }
   }
   componentWillMount() {
     // console.log('发送ajax')
-    // this.setState({
-    //   game: game
-    // })
+    let that = this
+    axios.get('https://www.dartsunion.com:7474/dartsworld/match/group?id=' + this.props.match.params.id)
+      .then(function (response) {
+        console.log(response)
+        that.setState({
+          round: response.data
+        })
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
   render() {
     return (
@@ -94,7 +103,7 @@ export default class Score extends Component {
                     </div>
                     {
                       group.map((team, team_index) => (
-                        
+
                           <div key={team_index} className="team">
                             <div className="person">
                               <div className="victory">

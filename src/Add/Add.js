@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-import GameInfo from '../GameInfo/GameInfo'
+
+// import GameInfo from '../GameInfo/GameInfo'
 
 
 import './add.css'
@@ -12,6 +14,7 @@ export default class Add extends Component {
     this.state = {
       // game: false
       id: '',
+      storeId: '',
       titleThree: '',
       titleOne: '',
       titleTwo: '',
@@ -31,32 +34,67 @@ export default class Add extends Component {
   componentWillMount() {
     if(this.props.match.params.id) {
       console.log('you id')
-      this.setState({
-        // game: false
-        id: 1,
-        titleThree: '激烈的',
-        titleOne: '兴盛路冬季飞镖比赛2',
-        titleTwo: '飞镖比赛',
-        time: '2017.12.5',
-        max: '20',
-        money: '20',
-        contact: '李老板',
-        phone: '110',
-        ps: '注意准时',
-        first: '100元',
-        second: '80元',
-        third: '50元',
-        fourth: '啤酒',
-        people: ['asdf', 'cvbbv', '123123']
-      })
+      let that = this
+      axios.get('https://www.dartsunion.com:7474/dartsworld/match/edit?id=' + this.props.match.params.id)
+        .then(function (response) {
+          console.log(response)
+          that.setState({
+            id: response.data.id,
+            storeId: response.data.storeId,
+            titleThree: response.data.titleThree,
+            titleOne: response.data.titleOne,
+            titleTwo: response.data.titleTwo,
+            time: response.data.time,
+            max: response.data.max,
+            money: response.data.money,
+            contact: response.data.contact,
+            phone: response.data.phone,
+            ps: response.data.ps,
+            first: response.data.first,
+            second: response.data.second,
+            third: response.data.third,
+            fourth: response.data.fourth,
+            people: response.data.people,
+            tips: false
+          })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     }
-
   }
   deleteGame() {
     console.log('删除赛事，发送ajax')
   }
   newGame() {
     console.log('发布赛事，发送ajax')
+    let that = this
+    let time = new Date().getTime()
+    console.log(time)
+    axios.post('https://www.dartsunion.com:7474/dartsworld/match/add', JSON.stringify({
+      id: '',
+      storeId: 1000003,
+      titleThree: that.state.titleThree,
+      titleOne: that.state.titleOne,
+      titleTwo: that.state.titleTwo,
+      time: time,
+      max: that.state.max,
+      money: that.state.money,
+      contact: that.state.contact,
+      phone: that.state.phone,
+      ps: that.state.ps,
+      first: that.state.first,
+      second: that.state.second,
+      third: that.state.third,
+      fourth: that.state.fourth,
+      people: []
+    }))
+    .then(function (response) {
+      console.log(response)
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
   }
   syncTitleThree(e) {
     this.setState({
@@ -152,6 +190,41 @@ export default class Add extends Component {
     // 留一个ajax交互
     console.log('提交ajax')
     console.log(this.state)
+    let that = this
+    axios.post('https://www.dartsunion.com:7474/dartsworld/match/edit?id=' + that.props.match.params.id, JSON.stringify({
+      id: that.props.match.params.id,
+      storeId: 1000003,
+      titleThree: that.state.titleThree,
+      titleOne: that.state.titleOne,
+      titleTwo: that.state.titleTwo,
+      time:  that.state.titleTwo,
+      max: that.state.max,
+      money: that.state.money,
+      contact: that.state.contact,
+      phone: that.state.phone,
+      ps: that.state.ps,
+      first: that.state.first,
+      second: that.state.second,
+      third: that.state.third,
+      fourth: that.state.fourth,
+      people: that.state.people
+    }))
+    .then(function (response) {
+      console.log(response)
+      if(response.data.code === 1) {
+        that.setState({
+          tips: true
+        })
+        setTimeout(function() {// 提示消息
+          that.setState({
+            tips: false
+          })
+        }, 1000)
+      }
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
   }
   render() {
     return (
@@ -229,7 +302,7 @@ export default class Add extends Component {
                 {
                   this.state.people.map((people, i) => (
                     <div key={i} className="box">
-                      <span>{i}号</span>
+                      <span>{i + 1}号</span>
                       <input onChange={this.changeName.bind(this, i)} defaultValue={people} placeholder="添加名字"/>
                     </div>
                   ))
@@ -238,6 +311,13 @@ export default class Add extends Component {
                 <div onClick={this.deletePeople.bind(this)} className="delete-btns">-删除人员</div>
                 <Link to={'/group/' + this.props.match.params.id} className="edit-group-btn">编辑比赛分组</Link>
                 <div onClick={this.finish.bind(this)} className="btn add-btn">提交</div>
+                {
+                  this.state.tips
+                  ?
+                  <div className="tips">修改成功！</div>
+                  :
+                  ''
+                }
               </div>
             :
             <div>

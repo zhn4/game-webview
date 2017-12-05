@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 
 import './Group.css'
@@ -74,10 +75,33 @@ export default class Group extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      round: round,
+      round: [],
       people_list: ['陈', '李', '郭', '周', '司徒', '黄'],
       score: score
     }
+  }
+  componentWillMount() {
+    let that = this
+    axios.get('https://www.dartsunion.com:7474/dartsworld/match/edit?id=' + this.props.match.params.id)
+      .then(function (response) {
+        console.log(response)
+        that.setState({
+          people_list: response.data.people
+        })
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+      axios.get('https://www.dartsunion.com:7474/dartsworld/match/group?id=' + this.props.match.params.id)
+        .then(function (response) {
+          console.log(response)
+          that.setState({
+            round: response.data
+          })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
   }
   addRound() {
     console.log('增加轮')
@@ -204,6 +228,17 @@ export default class Group extends Component {
   submit() {
     console.log(this.state.round)
     // 发送分组ajax
+    let that = this
+    axios.post('https://www.dartsunion.com:7474/dartsworld/match/group?id=' + this.props.match.params.id, JSON.stringify({
+      id: that.props.match.params.id,
+      round: that.state.round
+    }))
+    .then(function (response) {
+      console.log(response)
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
   }
   render() {
     return (
@@ -241,7 +276,7 @@ export default class Group extends Component {
 
                               <div className="part">
                                 <select data-round_index={round_index} data-group_index={group_index} data-team_index={team_index} data-person_index="0" onChange={this.changeSelectName.bind(this, team_index)} >
-                                  <option value="0">请选择人员</option>
+                                  <option value="0">{team[0].name}</option>
                                   {
                                     this.state.people_list.map((name, i) => (
                                       <option key={i} value={name}>{name}</option>
@@ -249,7 +284,7 @@ export default class Group extends Component {
                                   }
                                 </select>
                                 <select data-round_index={round_index} data-group_index={group_index} data-team_index={team_index} data-person_index="0" onChange={this.changeScore.bind(this, team_index)} >
-                                  <option value="0">请选择分数</option>
+                                  <option value="0">{team[0].score}</option>
                                   {
                                     this.state.score.map((num, num_index) => (
                                       <option key={num_index} value={num}>{num}</option>
@@ -262,7 +297,7 @@ export default class Group extends Component {
                             <div className="person">
                               <div className="part">
                                 <select data-round_index={round_index} data-group_index={group_index} data-team_index={team_index} data-person_index="1" onChange={this.changeSelectName.bind(this, team_index)}>
-                                  <option value="0">请选择人员</option>
+                                  <option value="0">{team[1].name}</option>
                                   {
                                     this.state.people_list.map((name, i) => (
                                       <option key={i} value={name}>{name}</option>
@@ -270,7 +305,7 @@ export default class Group extends Component {
                                   }
                                 </select>
                                 <select data-round_index={round_index} data-group_index={group_index} data-team_index={team_index} data-person_index="1" onChange={this.changeScore.bind(this, team_index)} >
-                                  <option value="0">请选择分数</option>
+                                  <option value="0">{team[1].score}</option>
                                   {
                                     this.state.score.map((num, num_index) => (
                                       <option key={num_index} value={num}>{num}</option>
