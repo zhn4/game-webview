@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Back from '../Back/Back'
+
 
 
 import './Group.css'
@@ -76,7 +78,7 @@ export default class Group extends Component {
     super(props)
     this.state = {
       round: [],
-      people_list: ['陈', '李', '郭', '周', '司徒', '黄'],
+      people_list: [],
       score: score
     }
   }
@@ -235,6 +237,17 @@ export default class Group extends Component {
     }))
     .then(function (response) {
       console.log(response)
+      console.log(response.status)
+      if(response.status === 200) {
+        that.setState({
+          tips: true
+        })
+        setTimeout(function() {// 提示消息
+          that.setState({
+            tips: false
+          })
+        }, 1000)
+      }
     })
     .catch(function (error) {
       console.log(error)
@@ -243,7 +256,7 @@ export default class Group extends Component {
   render() {
     return (
       <div className="groups">
-        <h1>分组</h1>
+        <Back />
         {
           this.state.round.map((round, round_index) => (
             <div key={round_index} className="">
@@ -338,22 +351,16 @@ export default class Group extends Component {
           ))
         }
         <div onClick={this.addRound.bind(this)} className="btn new-btn">+添加轮</div>
-
+        {
+          this.state.tips
+          ?
+          <div className="tips">修改成功！</div>
+          :
+          ''
+        }
         <div className="btn add-btn" onClick={this.submit.bind(this)}>提交</div>
 
       </div>
     )
   }
 }
-
-// class Winbtn extends Component {
-//   constructor() {
-//
-//   }
-//
-//   render() {
-//     return (
-//       <div data-round_index={round_index} data-group_index={group_index} data-team_index={team_index} data-person_index="1" className="game-state" data-win="false" onClick={this.changeWin.bind(this, team_index)} ></div>
-//     )
-//   }
-// }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Back from '../Back/Back'
 
 
 // import GameInfo from '../GameInfo/GameInfo'
@@ -65,6 +66,23 @@ export default class Add extends Component {
   }
   deleteGame() {
     console.log('删除赛事，发送ajax')
+    let that = this
+    axios.get('https://www.dartsunion.com:7474/dartsworld/match/delete?id=' + this.props.match.params.id + '&storeId=' + this.props.match.params.storeId)
+      .then(function (response) {
+        console.log(response)
+        that.setState({
+          tips: true
+        })
+        setTimeout(function() {// 提示消息
+          that.setState({
+            tips: false
+          })
+          that.props.history.goBack()
+        }, 1000)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
   newGame() {
     console.log('发布赛事，发送ajax')
@@ -73,7 +91,7 @@ export default class Add extends Component {
     console.log(time)
     axios.post('https://www.dartsunion.com:7474/dartsworld/match/add', JSON.stringify({
       id: '',
-      storeId: 1000003,
+      storeId: that.props.match.params.storeId,
       titleThree: that.state.titleThree,
       titleOne: that.state.titleOne,
       titleTwo: that.state.titleTwo,
@@ -91,6 +109,15 @@ export default class Add extends Component {
     }))
     .then(function (response) {
       console.log(response)
+      that.setState({
+        tips: true
+      })
+      setTimeout(function() {// 提示消息
+        that.setState({
+          tips: false
+        })
+        that.props.history.goBack()
+      }, 1000)
     })
     .catch(function (error) {
       console.log(error)
@@ -193,7 +220,7 @@ export default class Add extends Component {
     let that = this
     axios.post('https://www.dartsunion.com:7474/dartsworld/match/edit?id=' + that.props.match.params.id, JSON.stringify({
       id: that.props.match.params.id,
-      storeId: 1000003,
+      // storeId: that.props.match.params.storeId,
       titleThree: that.state.titleThree,
       titleOne: that.state.titleOne,
       titleTwo: that.state.titleTwo,
@@ -229,6 +256,7 @@ export default class Add extends Component {
   render() {
     return (
       <div className="add">
+        <Back />
         <div className="title">
           赛事标题
         </div>
@@ -309,7 +337,14 @@ export default class Add extends Component {
                 }
                 <div onClick={this.addPeople.bind(this)} className="new-btns">+添加人员</div>
                 <div onClick={this.deletePeople.bind(this)} className="delete-btns">-删除人员</div>
+              {
+                this.state.people.length >= 2
+                ?
                 <Link to={'/group/' + this.props.match.params.id} className="edit-group-btn">编辑比赛分组</Link>
+              :
+              ''
+              }
+                <div className="btn delete-btn" onClick={this.deleteGame.bind(this)}>删除赛事</div>
                 <div onClick={this.finish.bind(this)} className="btn add-btn">提交</div>
                 {
                   this.state.tips
@@ -321,9 +356,14 @@ export default class Add extends Component {
               </div>
             :
             <div>
-              <div className="btn delete-btn" onClick={this.deleteGame.bind(this)}>删除赛事</div>
-
               <div className="btn add-btn" onClick={this.newGame.bind(this)}>发布赛事</div>
+              {
+                this.state.tips
+                ?
+                <div className="tips">添加成功！</div>
+                :
+                ''
+              }
             </div>
         }
 

@@ -6,7 +6,8 @@
 
 .add-team {
   color: #2F95F5;
-
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .team {
@@ -81,4 +82,12 @@
 
 .group > div:first-of-type {
   margin-bottom: 14px;
+}
+
+.groups h2 {
+  text-align: center;
+}
+
+.groups .group > div:first-of-type {
+  text-align: center;
 }

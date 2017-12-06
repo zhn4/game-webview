@@ -46,9 +46,10 @@ export default class Dashboard extends Component {
     }
   }
   componentWillMount() {
+    console.log(this.props.match.params.storeId)
     console.log('发送ajax')
     let that = this
-    axios.get('https://www.dartsunion.com:7474/dartsworld/match/dashboard?storeId=1000003')
+    axios.get('https://www.dartsunion.com:7474/dartsworld/match/dashboard?storeId=' + this.props.match.params.storeId)
       .then(function (response) {
         // console.log(response)
         // console.log(response.data)
