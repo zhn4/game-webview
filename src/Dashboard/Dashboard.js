@@ -90,7 +90,7 @@ export default class Dashboard extends Component {
             :
             ''
         }
-        <Link to="/add" className="link-btn">发布赛事</Link>
+        <Link to={'/add/' + this.props.match.params.storeId} className="link-btn">发布赛事</Link>
       </div>
     )
   }
