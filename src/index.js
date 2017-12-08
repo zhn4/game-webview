@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { BrowserRouter as Router, Route} from 'react-router-dom';
+import { HashRouter as Router, Route} from 'react-router-dom';
 
 import './index.css';
 import App from './App';
@@ -24,7 +24,7 @@ ReactDOM.render(
       {/* 添加赛事 */}
       <Route exact path='/add/:storeId' component={Add}/>
       {/* 修改赛事，添加参赛人员 */}
-      <Route exact path='/edit/:id' component={Add}/>
+      <Route exact path='/edit/:id/:storeId' component={Add}/>
       <Route exact path='/gameinfo/:id' component={GameInfo}/>
       {/* 比赛分组 */}
       <Route exact path='/group/:id' component={Group}/>

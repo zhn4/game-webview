@@ -71,7 +71,7 @@ export default class Dashboard extends Component {
                 <div className="card" key={i}>
                   <div className="logo">logo</div>
                   <div>
-                    <Link to={'/edit/' + game.id}>
+                    <Link to={'/edit/' + game.id + '/' + this.props.match.params.storeId}>
                       <div className="title">{game.title}</div>
                       <div className="address">{game.address}</div>
                       <div className="time">{game.time}</div>
